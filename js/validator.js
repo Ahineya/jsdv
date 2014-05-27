@@ -17,7 +17,7 @@ var _Validator = function () {
     };
 
     var _init = function (o, rule, text, errorElem) {
-        if ((typeof(o) !== 'undefined') && (typeof(_o) === 'undefined')) {
+        if ((typeof(o) !== 'undefined')) {
             _o = o;
             _setText(text);
 

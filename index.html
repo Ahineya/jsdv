@@ -6,8 +6,6 @@
 	<link rel="stylesheet" type="text/css" href="css/validator.css">
 </head>
 <body>
-
-
 	<div>
 	  <input id="first" type="text" validate='digits' validate-message='Digits only' placeholder="Digits only">
 	</div>
@@ -19,8 +17,11 @@
 	  <div id="test" style='color: red; background-color: pink;'></div>
 	</div>
 	<div>
-	  <input id="third" type="text" validate='url' validate-message='Invalid URL' placeholder="URL">
+	  <input id="fourth" type="text" validate='url' validate-message='Invalid URL' placeholder="URL">
 	</div>
+    <div>
+        <input  type="text" validate='length-min-10' validate-message='Minimal length is 10 symbols' placeholder="Any">
+    </div>
 
 	<script type="text/javascript" src="js/validator.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
