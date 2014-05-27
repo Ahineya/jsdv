@@ -6,14 +6,17 @@ var _Validator = function () {
     var _valid = true;
 
     var _rules = {
-        'digits': function (o) {
+        'digits': function(o) {
             return o.value.match(/^\d*$/);
         },
-        'letters': function (o) {
+        'letters': function(o) {
             return o.value.match(/^[a-zа-яA-ZА-Я]*$/);
         },
-        'email': function (o) {
+        'email': function(o) {
             return o.value.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        },
+        'url': function(o) {
+            return o.value.match(/^((ht|f)tps?:\/\/)?[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/i);
         }
     };
 

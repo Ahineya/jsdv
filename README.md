@@ -36,11 +36,12 @@ Now there are three main validators:
 * Digits
 * Letters
 * Email
+* Url
+
 So, you can use validate='digits', validate='letters' or validate='email'.
 
 Other useful functions are added through extend function.
 There are:
-* url
 * length-min
 * length-max
 Length-min and length-max validators needs an extra attributes: validator-length-min and validator-length-max:
