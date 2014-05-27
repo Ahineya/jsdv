@@ -51,6 +51,7 @@ Other useful functions are added through extend function.
 There are:
 * length-min
 * length-max
+
 Length-min and length-max validators needs an extra attributes: validator-length-min and validator-length-max:
 
 ```html
