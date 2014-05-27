@@ -112,7 +112,7 @@ var JSDV = function () {
     var _extensions = {
     };
     var _init = function () {
-        var fields = $('input[validate]');
+        var fields = $('input[validate], textarea[validate]');
 
         function _v() {
             var v = new _Validator();

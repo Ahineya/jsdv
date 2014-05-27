@@ -1,3 +1,6 @@
+/**
+*   Validator styles
+*/
 .v-invalid {
   border: 2px solid red;
 }

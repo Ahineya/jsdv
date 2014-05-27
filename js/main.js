@@ -5,7 +5,11 @@ v.extend(function(o) {
 },'url');
 
 v.extend(function(o) {
-    return o.val().length > 10;
+    return (o.val().length > 10) || (o.val().length == 0);
 },'length-min-10');
+
+v.extend(function(o) {
+    return (o.val().length <= 10);
+},'length-max-10');
 
 v.init();
