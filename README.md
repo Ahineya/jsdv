@@ -5,6 +5,13 @@ JavaScript forms validator. Created for html attributes validation declarations
 
 Demo: http://evsegneev.pp.ua/jsdv
 
+Browser Support:
+* IE8+
+* Opera 10.6+ (maybe earlier, don't know)
+* Safari 4.0+
+* Firefox 3.0+
+* Chrome 14+ (maybe earlier, don't know)
+
 How it works?
 
 1. Include validator.js and validator.css to your html.
