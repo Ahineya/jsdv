@@ -3,6 +3,8 @@ jsdv
 
 JavaScript forms validator. Created for html attributes validation declarations
 
+Demo: http://evsegneev.pp.ua/validator
+
 How it works?
 
 1. Include validator.js and validator.css to your html.
