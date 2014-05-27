@@ -39,7 +39,7 @@ You can pass id of your own error container:
 <div id="my-error" style="..."></div>
 ```
 
-Now there are three main validators:
+Now there are four main validators:
 * Digits
 * Letters
 * Email
