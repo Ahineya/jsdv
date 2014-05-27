@@ -1,4 +1,4 @@
-var Validator = function () {
+var _Validator = function () {
     var _o;
     var _text;
     var _showing = false;
@@ -115,7 +115,7 @@ var JSDV = function () {
         var fields = $('input[validate]');
 
         function _v() {
-            var v = new Validator();
+            var v = new _Validator();
             v.init(
                 $(fields[i]), $(fields[i]).attr('validate'),
                 $(fields[i]).attr('validate-message' || 'Unknown error'),
