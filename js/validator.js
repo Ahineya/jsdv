@@ -3,6 +3,7 @@ var _Validator = function () {
     var _text;
     var _showing = false;
     var _errorElem;
+    var _valid = true;
 
     var _rules = {
         'digits': function (o) {
@@ -98,6 +99,7 @@ var _Validator = function () {
     var _validate = function (rule) {
         if (typeof(rule) === 'string') {
             if (typeof(_rules[rule]) === 'function') {
+                _valid = _rules[rule](_o);
                 return _rules[rule](_o);
             } else {
                 return true;
@@ -119,9 +121,14 @@ var _Validator = function () {
         }
     };
 
+    var _isValid = function() {
+        return _valid;
+    }
+
     return {
         'init': _init,
-        'extend': _extend
+        'extend': _extend,
+        'isValid': _isValid
     };
 
 };
@@ -129,6 +136,7 @@ var _Validator = function () {
 var JSDV = function () {
     var _extensions = {
     };
+    var _validators = [];
     var _init = function () {
 
         var fields = [];
@@ -152,6 +160,7 @@ var JSDV = function () {
 
         function _v() {
             var v = new _Validator();
+            _validators.push(v);
 
             var vmessage = fields[i].hasAttribute('validate-message') ? fields[i].getAttribute('validate-message') : 'Unknown error';
             var verrorid = fields[i].hasAttribute('validate-error-id') ? fields[i].getAttribute('validate-error-id') : false;
@@ -178,8 +187,19 @@ var JSDV = function () {
         }
     };
 
+    var _isValid = function() {
+        var valid = true;
+        for (var i = 0; i<_validators.length; i++) {
+            if (!_validators[i].isValid()) {
+                valid = false;
+            }
+        }
+        return valid;
+    }
+
     return {
         'init': _init,
-        'extend': _extend
+        'extend': _extend,
+        'isValid': _isValid
     };
 };

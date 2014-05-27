@@ -15,3 +15,7 @@ v.extend(function(o) {
 },'length-max');
 
 v.init();
+
+document.getElementById('check').onclick = function(){
+   alert(v.isValid() ? 'Valid' : 'Invalid' );
+};

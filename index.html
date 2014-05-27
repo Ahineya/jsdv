@@ -3,6 +3,7 @@
 <head>
 	<title>Validator test</title>
 	<link rel="stylesheet" type="text/css" href="css/validator.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 <body>
 	<div>
@@ -24,7 +25,9 @@
     <div>
         <textarea validate='length-max' validator-length="10" validate-message='Maximal length is 10 symbols' cols="30" rows="10" placeholder="Max 10 symbols"></textarea>
     </div>
-
+    <div>
+        <button id="check">Check</button>
+    </div>
 	<script type="text/javascript" src="js/validator.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 </body>
