@@ -10,7 +10,8 @@ var _Validator = function () {
             return o.value.match(/^\d*$/);
         },
         'letters': function(o) {
-            return o.value.match(/^[a-zа-яA-ZА-Я]*$/);
+            return /^[a-zа-яё]+$/i.test(o.value);
+            //return o.value.match(/^[a-zA-Zа-яА-ЯёЁ]*$/);
         },
         'email': function(o) {
             return o.value.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -145,7 +146,7 @@ var _Validator = function () {
 
 };
 
-var JSDV = function () {
+window['JSDV'] = function () {
     var _extensions = {
     };
     var _validators = [];
