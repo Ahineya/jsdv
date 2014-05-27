@@ -20,10 +20,10 @@
 	  <input id="fourth" type="text" validate='url' validate-message='Invalid URL' placeholder="URL">
 	</div>
     <div>
-        <input  type="text" validate='length-min' validator-length="10" validate-message='Minimal length is 10 symbols' placeholder="Min 10 symbols">
+        <input  type="text" validate='length-min' validator-length-min="10" validate-message='Minimal length is 10 symbols' placeholder="Min 10 symbols">
     </div>
     <div>
-        <textarea validate='length-max' validator-length="10" validate-message='Maximal length is 10 symbols' cols="30" rows="10" placeholder="Max 10 symbols"></textarea>
+        <textarea validate='length-max length-min letters' validator-length-max="15" validator-length-min="10" validate-message='Message length must be between 10 and 15 letters' cols="30" rows="10" placeholder="Max 15 symbols"></textarea>
     </div>
     <div>
         <button id="check">Check</button>

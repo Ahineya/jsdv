@@ -98,12 +98,21 @@ var _Validator = function () {
 
     var _validate = function (rule) {
         if (typeof(rule) === 'string') {
-            if (typeof(_rules[rule]) === 'function') {
-                _valid = _rules[rule](_o);
-                return _rules[rule](_o);
-            } else {
-                return true;
+            rule = rule.replace(/^\s+|\s+$/g, '');
+            var rules = rule.split(" ");
+            var valid = true;
+            for (var i = 0; i<rules.length; i++) {
+                if (typeof(_rules[rules[i]]) === 'function') {
+                    //_valid = _rules[rule[i]](_o);
+                    //return _rules[rule[i]](_o);
+                    if (!_rules[rules[i]](_o)) {
+                        valid = false;
+                    }
+                }
             }
+            _valid = valid;
+            return valid;
+
         }
     };
 

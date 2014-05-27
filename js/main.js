@@ -5,12 +5,12 @@ v.extend(function(o) {
 },'url');
 
 v.extend(function(o) {
-    var length = o.getAttribute('validator-length');
+    var length = o.getAttribute('validator-length-min');
     return (o.value.length >= length);
 },'length-min');
 
 v.extend(function(o) {
-    var length = o.getAttribute('validator-length');
+    var length = o.getAttribute('validator-length-max');
     return (o.value.length <= length);
 },'length-max');
 
