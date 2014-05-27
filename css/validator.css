@@ -1,0 +1,7 @@
+.v-invalid {
+  border: 2px solid red;
+}
+
+.v-error {
+  color: red;
+}
