@@ -3,7 +3,7 @@ jsdv
 
 JavaScript forms validator. Created for html attributes validation declarations
 
-Demo: http://evsegneev.pp.ua/validator
+Demo: http://evsegneev.pp.ua/jsdv
 
 How it works?
 
