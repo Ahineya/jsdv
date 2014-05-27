@@ -38,7 +38,7 @@ Now there are three main validators:
 * Email
 * Url
 
-So, you can use validate='digits', validate='letters' or validate='email'.
+So, you can use validate='digits', validate='letters',validate='email' or validate='url'.
 
 Other useful functions are added through extend function.
 There are:
