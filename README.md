@@ -24,7 +24,7 @@ How it works?
   ```
 
 3. Initialize validator:
- ```html
+ ```javascript
  var v = new JSDV();
  //here you can add your own validation rules
  v.init();
