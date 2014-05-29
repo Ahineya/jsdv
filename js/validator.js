@@ -21,7 +21,7 @@ var _Validator = function () {
         }
     };
 
-    var _init = function (o, rule, text, errorElem) {
+    var _init = function (o, rule, text, errorElem, validateOn) {
         if ((typeof(o) !== 'undefined')) {
             _o = o;
             _setText(text);
@@ -31,13 +31,33 @@ var _Validator = function () {
             }
 
             if (typeof(rule) === 'string') {
-                _o.onkeyup = function () {
-                    if (!_validate(rule)) {
-                        _show();
-                    } else {
-                        _hide();
+                if (!validateOn) {
+                    _o.onkeyup = function () {
+                        if (!_validate(rule)) {
+                            _show();
+                        } else {
+                            _hide();
+                        }
+                    };
+                } else {
+                    var events = validateOn.split(",");
+                    for (var i =0; i<events.length; i++) {
+                        events[i] = events[i].replace(/^\s+|\s+$/g, '');
+
+                        var eventsArr = events[i].split(" ");
+
+                        var elem = document.getElementById(eventsArr[0]);
+                        var action = eventsArr[1];
+                        elem["on" + action] = function () {
+                            if (!_validate(rule)) {
+                                _show();
+                            } else {
+                                _hide();
+                            }
+                        };
                     }
-                };
+                }
+
             }
 
             return true;
@@ -177,12 +197,14 @@ window['JSDV'] = function () {
 
             var vmessage = fields[i].hasAttribute('validate-message') ? fields[i].getAttribute('validate-message') : 'Unknown error';
             var verrorid = fields[i].hasAttribute('validate-error-id') ? fields[i].getAttribute('validate-error-id') : false;
+            var validateOn = fields[i].hasAttribute('validate-on') ? fields[i].getAttribute('validate-on') : false;
 
             v.init(
                 fields[i],
                 fields[i].getAttribute('validate'),
                 vmessage,
-                verrorid
+                verrorid,
+                validateOn
             );
             for (var e in _extensions) {
                 v.extend(_extensions[e], e);
@@ -194,11 +216,13 @@ window['JSDV'] = function () {
         }
     };
 
-    var _extend = function (f, name) {
-        if ((typeof(f) === 'function') && typeof(name) === 'string') {
-            _extensions[name] = f;
+    var _extend = function(opts) {
+        if (opts && typeof(opts) === "object") {
+            if (opts.f && typeof(opts.f) === "function" && opts.name && typeof(opts.name) === "string") {
+                _extensions[opts.name] = opts.f;
+            }
         }
-    };
+    }
 
     var _isValid = function() {
         var valid = true;
