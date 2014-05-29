@@ -71,7 +71,7 @@ Next declaration tolds that validation will be executed after "onkeyup" event on
 with id="pass-first" and id="pass-second":
 ```html
 validate-on="pass-first keyup, pass-second keyup"
-```html
+```
 
 You can put more than one validator on form input:
 
