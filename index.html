@@ -15,7 +15,7 @@
 	  <input id="second" type="text" validate="letters" validate-message="Letters only" placeholder="Letters only">
 	</div>
 	<div>
-	  <input id="third" type="text" validate="email" validate-message="Invalid email" validate-error-id="test"  placeholder="Email">
+	  <input id="third" type="text" validate="email required" validate-message="Required valid email" validate-error-id="test"  placeholder="Email required">
 	  <div id="test" style="color: red; background-color: pink;"></div>
 	</div>
 	<div>
@@ -28,9 +28,13 @@
         <textarea validate='length-max length-min letters' validate-length-max="15" validate-length-min="10" validate-message='Message length must be between 10 and 15 letters' cols="30" rows="10" placeholder="Message between 10 and 15 letters"></textarea>
     </div>
     <div>
-    	<input id="pass-first" validate="same" validate-with="pass-second" validate-on="pass-first keyup, pass-second keyup" validate-error-id="same-test" validate-message="Passwords do not match" type="password">
-    	<input id="pass-second" type="password">
+    	<input id="pass-first" validate="same" validate-with="pass-second" validate-on="pass-first keyup, pass-second keyup" validate-error-id="same-test" validate-message="Passwords do not match" type="password" placeholder="Password">
+    	<input id="pass-second" type="password" placeholder="Password">
     	<div id="same-test" style="color: red; background-color: pink;"></div>
+    </div>
+    <div>
+        <input id="depend-test" type="text" placeholder="Depends"/>
+        <input id="depend-test-main" validate="depends-test" validate-depends="depend-test" validate-on="depend-test keyup, depend-test-main keyup" validate-message="If previous input value equals 'secret', then digits only, else letters only." type="text" placeholder="Depends"/>
     </div>
     <div>
         <button id="check">Check</button>

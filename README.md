@@ -42,6 +42,7 @@ You can pass id of your own error container:
 ```
 
 Now there are validators:
+* required
 * digits
 * letters
 * email
@@ -102,4 +103,28 @@ v._extend({
 v.init();
 
 console.log();
+```
+
+There are good extender example - 'depends-test' validator. It selects validation rule based on another input value.
+If input#depend-test value equals 'secret', then digits only valid, else letters valid.
+
+Html:
+```html
+<input id="depend-test" type="text" placeholder="Depends"/>
+<input id="depend-test-main" validate="depends-test" validate-depends="depend-test" validate-on="depend-test keyup, depend-test-main keyup" validate-message="If previous input value equals 'secret', then digits only, else letters only." type="text" placeholder="Depends"/>
+```
+
+JavaScript:
+```javascript
+v.extend({
+    f: function(o) {
+        var depElem = document.getElementById(o.getAttribute("validate-depends"));
+        if (depElem.value === "secret") {
+            return o.value.match(/^\d*$/); //Digits only
+        } else {
+            return /^[a-zа-яё]+$/i.test(o.value); //Letters only
+        }
+    },
+    name: "depends-test"
+});
 ```

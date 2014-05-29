@@ -6,18 +6,20 @@ var _Validator = function () {
     var _valid = true;
 
     var _rules = {
+        'required': function(o) {
+            return o.value !== "";
+        },
         'digits': function(o) {
-            return o.value.match(/^\d*$/);
+            return o.value.match(/^\d*$/) || o.value === "";
         },
         'letters': function(o) {
-            return /^[a-zа-яё]+$/i.test(o.value);
-            //return o.value.match(/^[a-zA-Zа-яА-ЯёЁ]*$/);
+            return /^[a-zа-яё]+$/i.test(o.value) || o.value === "";
         },
         'email': function(o) {
-            return o.value.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+            return o.value.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) || o.value === "";
         },
         'url': function(o) {
-            return o.value.match(/^((ht|f)tps?:\/\/)?[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/i);
+            return o.value.match(/^((ht|f)tps?:\/\/)?[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/i) || o.value === "";
         }
     };
 
@@ -39,6 +41,13 @@ var _Validator = function () {
                             _hide();
                         }
                     };
+
+                    if (!_validate(rule)) {
+                        _show();
+                    } else {
+                        _hide();
+                    }
+
                 } else {
                     var events = validateOn.split(",");
                     for (var i =0; i<events.length; i++) {
@@ -55,6 +64,13 @@ var _Validator = function () {
                                 _hide();
                             }
                         };
+
+                        if (!_validate(rule)) {
+                            _show();
+                        } else {
+                            _hide();
+                        }
+
                     }
                 }
 
@@ -237,7 +253,7 @@ window['JSDV'] = function () {
     _extend({
         f: function(o) {
             var length = o.getAttribute('validate-length-min');
-            return (o.value.length >= length);
+            return (o.value.length >= length || o.value === "");
         },
         name: 'length-min'
     });
@@ -245,7 +261,7 @@ window['JSDV'] = function () {
     _extend({
         f: function(o) {
             var length = o.getAttribute('validate-length-max');
-            return (o.value.length <= length);
+            return (o.value.length <= length || o.value === "");
         },
         name: 'length-max'
     });
@@ -254,7 +270,7 @@ window['JSDV'] = function () {
         f: function(o) {
             var wth = o.getAttribute('validate-with');
             var elemWith = document.getElementById(wth);
-            return (o.value === elemWith.value);
+            return (o.value === elemWith.value || o.value === "");
         },
         name: "same"
     });
