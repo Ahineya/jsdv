@@ -234,6 +234,31 @@ window['JSDV'] = function () {
         return valid;
     }
 
+    _extend({
+        f: function(o) {
+            var length = o.getAttribute('validate-length-min');
+            return (o.value.length >= length);
+        },
+        name: 'length-min'
+    });
+
+    _extend({
+        f: function(o) {
+            var length = o.getAttribute('validate-length-max');
+            return (o.value.length <= length);
+        },
+        name: 'length-max'
+    });
+
+    _extend({
+        f: function(o) {
+            var wth = o.getAttribute('validate-with');
+            var elemWith = document.getElementById(wth);
+            return (o.value === elemWith.value);
+        },
+        name: "same"
+    });
+
     return {
         'init': _init,
         'extend': _extend,

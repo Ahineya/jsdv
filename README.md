@@ -25,12 +25,14 @@ How it works?
 
 3. Initialize validator:
  ```html
- var v = new JSDV(); //v have an isValid() method
+ var v = new JSDV();
  //here you can add your own validation rules
  v.init();
  ```
 
 That's all!
+
+To check that all fields on page is valid, use ```javascript v.isValid();```
 
 You can pass id of your own error container:
 
@@ -39,50 +41,65 @@ You can pass id of your own error container:
 <div id="my-error" style="..."></div>
 ```
 
-Now there are four main validators:
-* Digits
-* Letters
-* Email
-* Url
-
-So, you can use validate='digits', validate='letters',validate='email' or validate='url'.
-
-Other useful functions are added through extend function.
-There are:
+Now there are validators:
+* digits
+* letters
+* email
+* url
 * length-min
 * length-max
+* same
 
-Length-min and length-max validators needs an extra attributes: validator-length-min and validator-length-max:
+Length-min and length-max validate needs an extra attributes: validate-length-min and validate-length-max:
 
 ```html
-<input  type="text" validate="length-min" validator-length-min="10" validate-message="Minimal length is 10 symbols">
-<input  type="text" validate="length-max" validator-length-max="10" validate-message="Maximal length is 10 symbols">
+<input  type="text" validate="length-min" validate-length-min="10" validate-message="Minimal length is 10 symbols">
+<input  type="text" validate="length-max" validate-length-max="10" validate-message="Maximal length is 10 symbols">
 ```
+
+Same validator an requires extra-attributes: validate-with and validate-on.
+To use it, you only need to declare it on one of the compared elements
+ ```html
+<input id="pass-first" validate="same" validate-with="pass-second" validate-on="pass-first keyup, pass-second keyup" validate-error-id="same-test" validate-message="Passwords do not match" type="password">
+<input id="pass-second" type="password">
+ ```
+
+Validate-on attribute defines an events that fires validation.
+First word is id of the element, and second - event without leading "on".
+Separate different events by comma.
+Next declaration tolds that validation will be executed after "onkeyup" event on elements
+with id="pass-first" and id="pass-second":
+```html
+validate-on="pass-first keyup, pass-second keyup"
+html
 
 You can put more than one validator on form input:
 
 ```html
-<textarea validate='length-max length-min letters' validator-length-max="15" validator-length-min="10" validate-message='Message length must be between 10 and 15 letters'></textarea>
+<textarea validate='length-max length-min letters' validate-length-max="15" validate-length-min="10" validate-message='Message length must be between 10 and 15 letters'></textarea>
 ```
 
-If you want to add custom validator, you need to use an extend function:
+If you want to add custom validator, you need to use an extend function.
+Function extend accepts an object. Object must contain two properties:
+* f - validation function
+* name - name of the validation function
+In context of the validation function, o is an html element that we wants to validate.
+validation function must return boolean value. If it returns true, validation passed.
+Else - validation not passed.
 
 ```javascript
 
 var v = new JSDV;
 
-/*
-Function extend accepts two parameters:
-function(o) - validation function
-and name of the rule.
-You need to pass "o" object in validation function - the reference on your form input
-*/
-v.extend(function(o) {
-    var length = o.getAttribute('validator-length-min');
-    return (o.value.length >= length); //If valid - returns true, else - false.
-}, 'length-min'); //second parameter is a rule name
+v._extend({
+        f: function(o) {
+            var length = o.getAttribute('validate-length-min');
+            return (o.value.length >= length);
+        },
+        name: 'length-min'
+    });
 
 v.init();
 
-console.log(v.isValid());
+console.log();
 ```
