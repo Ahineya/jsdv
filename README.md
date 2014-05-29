@@ -4,16 +4,18 @@ jsdv
 JavaScript forms client validator. Created for html attributes validation declarations
 
 Demo: http://evsegneev.pp.ua/jsdv
+
 Npm: https://www.npmjs.org/package/jsdv
 
-Browser Support:
+#### Browser Support:
+
 * IE8+
 * Opera 10.6+ (maybe earlier, don't know)
 * Safari 4.0+
 * Firefox 3.0+
 * Chrome 14+ (maybe earlier, don't know)
 
-How it works?
+#### How it works?
 
 1. Include validator.js and validator.css to your html.
 
@@ -41,6 +43,8 @@ You can pass id of your own error container:
 <input type="text" validate='letters' validate-message='Letters only'  validate-error-id='my-error'>
 <div id="my-error" style="..."></div>
 ```
+
+#### Validators
 
 Now there are validators:
 * required
@@ -82,6 +86,8 @@ You can put more than one validator on form input:
 <textarea validate='length-max length-min letters' validate-length-max="15" validate-length-min="10" validate-message='Message length must be between 10 and 15 letters'></textarea>
 ```
 
+#### Ajax validator
+
 Ajax validator works differently (for now, I think). You can't use ajax with other validators. Example:
 ```html
 <input id="asyncTest" validate='ajax' validate-ajax-link="ajax.php" validate-message="Input current year" type="text" placeholder="Ajax"/>
@@ -95,6 +101,8 @@ You must return "true" for valid or any other value for invalid
 $s = $_POST['validate-data'];
 echo ($s == date("Y")) ? "true" : "false";
 ```
+
+#### Custom validators
 
 If you want to add custom validator, you need to use an extend function.
 Function extend accepts an object. Object must contain two properties:
