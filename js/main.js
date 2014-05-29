@@ -2,12 +2,12 @@
 var v = new JSDV();
 
 v.extend({
-    f: function(o) {
+    f: function(o, _v) {
         var depElem = document.getElementById(o.getAttribute("validate-depends"));
         if (depElem.value === "secret") {
-            return o.value.match(/^\d*$/); //Digits only
+            return _v("digits"); //Digits only
         } else {
-            return /^[a-zа-яё]+$/i.test(o.value); //Letters only
+            return _v("letters"); //Letters only
         }
     },
     name: "depends-test"

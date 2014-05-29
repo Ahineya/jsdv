@@ -143,9 +143,7 @@ var _Validator = function () {
             var valid = true;
             for (var i = 0; i<rules.length; i++) {
                 if (typeof(_rules[rules[i]]) === 'function') {
-                    //_valid = _rules[rule[i]](_o);
-                    //return _rules[rule[i]](_o);
-                    if (!_rules[rules[i]](_o)) {
+                    if (!_rules[rules[i]](_o, _validate)) {
                         valid = false;
                     }
                 }

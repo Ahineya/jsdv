@@ -84,8 +84,9 @@ If you want to add custom validator, you need to use an extend function.
 Function extend accepts an object. Object must contain two properties:
 * f - validation function
 * name - name of the validation function
-In context of the validation function, o is an html element that we wants to validate.
-validation function must return boolean value. If it returns true, validation passed.
+In context of the validation function, ```o``` is an html element that we wants to validate, and ```_v``` - built-in
+validation function, or extender.
+Validation function must return boolean value. If it returns true, validation passed.
 Else - validation not passed.
 
 ```javascript
@@ -93,7 +94,7 @@ Else - validation not passed.
 var v = new JSDV;
 
 v._extend({
-        f: function(o) {
+        f: function(o, _v) {
             var length = o.getAttribute('validate-length-min');
             return (o.value.length >= length);
         },
@@ -117,12 +118,12 @@ Html:
 JavaScript:
 ```javascript
 v.extend({
-    f: function(o) {
+    f: function(o, _v) {
         var depElem = document.getElementById(o.getAttribute("validate-depends"));
         if (depElem.value === "secret") {
-            return o.value.match(/^\d*$/); //Digits only
+            return _v("digits"); //Digits only
         } else {
-            return /^[a-zа-яё]+$/i.test(o.value); //Letters only
+            return _v("letters"); //Letters only
         }
     },
     name: "depends-test"
