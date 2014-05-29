@@ -32,7 +32,7 @@ How it works?
 
 That's all!
 
-To check that all fields on page is valid, use ```javascript v.isValid();```
+To check that all fields on page is valid, use ```v.isValid();```
 
 You can pass id of your own error container:
 
@@ -71,7 +71,7 @@ Next declaration tolds that validation will be executed after "onkeyup" event on
 with id="pass-first" and id="pass-second":
 ```html
 validate-on="pass-first keyup, pass-second keyup"
-html
+```html
 
 You can put more than one validator on form input:
 
