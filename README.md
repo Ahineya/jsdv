@@ -1,7 +1,7 @@
 jsdv
 ====
 
-JavaScript forms validator. Created for html attributes validation declarations
+JavaScript forms client validator. Created for html attributes validation declarations
 
 Demo: http://evsegneev.pp.ua/jsdv
 Npm: https://www.npmjs.org/package/jsdv
@@ -51,6 +51,7 @@ Now there are validators:
 * length-min
 * length-max
 * same
+* [standalone] ajax
 
 Length-min and length-max validate needs an extra attributes: validate-length-min and validate-length-max:
 
@@ -79,6 +80,20 @@ You can put more than one validator on form input:
 
 ```html
 <textarea validate='length-max length-min letters' validate-length-max="15" validate-length-min="10" validate-message='Message length must be between 10 and 15 letters'></textarea>
+```
+
+Ajax validator works differently (for now, I think). You can't use ajax with other validators. Example:
+```html
+<input id="asyncTest" validate='ajax' validate-ajax-link="ajax.php" validate-message="Input current year" type="text" placeholder="Ajax"/>
+```
+
+Server takes ```$_POST['validate-data']``` - your input value. And you can do anything with it.
+
+You must return "true" for valid or any other value for invalid
+```php
+<?php
+$s = $_POST['validate-data'];
+echo ($s == date("Y")) ? "true" : "false";
 ```
 
 If you want to add custom validator, you need to use an extend function.

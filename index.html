@@ -37,6 +37,9 @@
         <input id="depend-test-main" validate="depends-test" validate-depends="depend-test" validate-on="depend-test keyup, depend-test-main keyup" validate-message="If previous input value equals 'secret', then digits only, else letters only." type="text" placeholder="Depends"/>
     </div>
     <div>
+        <input id="asyncTest" validate='ajax' validate-ajax-link="ajax.php" validate-message="Input current year" type="text" placeholder="Ajax"/>
+    </div>
+    <div>
         <button id="check">Check</button>
     </div>
 	<script type="text/javascript" src="js/main.js"></script>

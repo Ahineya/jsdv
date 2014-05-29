@@ -1,4 +1,15 @@
+var delay = (function(){
+  var timer = 0;
+  return function(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
+
 var _Validator = function () {
+
+    var KEYPRESS_DELAY = 700;
+
     var _o;
     var _text;
     var _showing = false;
@@ -23,7 +34,14 @@ var _Validator = function () {
         }
     };
 
-    var _init = function (o, rule, text, errorElem, validateOn) {
+    var _init = function (opts) {
+        var o = opts.o;
+        var rule = opts.rule;
+        var text = opts.text;
+        var errorElem = opts.errorElem;
+        var validateOn = opts.validateOn;
+        var ajaxLink = opts.ajaxLink;
+
         if ((typeof(o) !== 'undefined')) {
             _o = o;
             _setText(text);
@@ -35,11 +53,17 @@ var _Validator = function () {
             if (typeof(rule) === 'string') {
                 if (!validateOn) {
                     _o.onkeyup = function () {
-                        if (!_validate(rule)) {
-                            _show();
+
+                        if (ajaxLink) {
+                            _ajaxValidate(ajaxLink);
                         } else {
-                            _hide();
+                            if (!_validate(rule)) {
+                                _show();
+                            } else {
+                                _hide();
+                            }
                         }
+                        
                     };
 
                     if (!_validate(rule)) {
@@ -58,10 +82,14 @@ var _Validator = function () {
                         var elem = document.getElementById(eventsArr[0]);
                         var action = eventsArr[1];
                         elem["on" + action] = function () {
-                            if (!_validate(rule)) {
-                                _show();
+                            if (ajaxLink) {
+                                _ajaxValidate(ajaxLink);
                             } else {
-                                _hide();
+                                if (!_validate(rule)) {
+                                    _show();
+                                } else {
+                                    _hide();
+                                }
                             }
                         };
 
@@ -154,6 +182,31 @@ var _Validator = function () {
         }
     };
 
+    var _ajaxValidate = function(link) {
+        delay(function() {
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                xmlhttp=new XMLHttpRequest();
+            } else {// code for IE6, IE5
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                    if (xmlhttp.responseText === "true") {
+                        _valid = true;
+                        _hide();
+                    } else {
+                        _valid = false;
+                        _show();
+                    }
+                }
+            }
+            xmlhttp.open("POST", link, true);
+            xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            xmlhttp.send("validate-data="+_o.value);
+        }, KEYPRESS_DELAY);
+    }
+
     var _setText = function (text) {
         if (typeof(text) === 'string') {
             _text = text;
@@ -212,14 +265,17 @@ JSDV = function () {
             var vmessage = fields[i].hasAttribute('validate-message') ? fields[i].getAttribute('validate-message') : 'Unknown error';
             var verrorid = fields[i].hasAttribute('validate-error-id') ? fields[i].getAttribute('validate-error-id') : false;
             var validateOn = fields[i].hasAttribute('validate-on') ? fields[i].getAttribute('validate-on') : false;
+            var ajaxLink = fields[i].hasAttribute('validate-ajax-link') ? fields[i].getAttribute('validate-ajax-link') : false;
 
-            v.init(
-                fields[i],
-                fields[i].getAttribute('validate'),
-                vmessage,
-                verrorid,
-                validateOn
-            );
+            v.init({
+                "o": fields[i],
+                "rule": fields[i].getAttribute('validate'),
+                "text": vmessage,
+                "errorElem": verrorid,
+                "validateOn": validateOn,
+                "ajaxLink": ajaxLink
+
+            });
             for (var e in _extensions) {
                 v.extend(_extensions[e], e);
             }
