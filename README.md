@@ -106,7 +106,7 @@ v.init();
 console.log();
 ```
 
-There are good extender example - 'depends-test' validator. It selects validation rule based on another input value.
+There is good extender example - 'depends-test' validator. It selects validation rule based on another input value.
 If input#depend-test value equals 'secret', then digits only valid, else letters valid.
 
 Html:
