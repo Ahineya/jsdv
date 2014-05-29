@@ -1,0 +1,25 @@
+{
+  "name": "jsdv",
+  "version": "0.0.2-5",
+  "description": "JavaScript forms validator. Created for html attributes validation declarations",
+  "keywords": [
+    "validation",
+    "forms"
+  ],
+  "homepage": "http://github.com/Ahineya/jsdv",
+  "main": "./js/validator.js",
+  "author": {
+    "name": "Pavel Evsegneev",
+    "email": "deadswallow@gmail.com",
+    "url": "http://github.com/Ahineya/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ahineya/jsdv.git"
+  },
+   "readme": "# JSDV - JavaScript forms validator.\r\n\r\nIt using a declarative way of validation rules description in html code. \r\nFor more information about JSDV visit https://github.com/Ahineya/jsdv\r\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/Ahineya/jsdv/issues"
+  }
+}

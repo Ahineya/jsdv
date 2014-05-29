@@ -4,6 +4,7 @@ jsdv
 JavaScript forms validator. Created for html attributes validation declarations
 
 Demo: http://evsegneev.pp.ua/jsdv
+Npm: https://www.npmjs.org/package/jsdv
 
 Browser Support:
 * IE8+

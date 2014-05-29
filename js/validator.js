@@ -180,7 +180,7 @@ var _Validator = function () {
 
 };
 
-window['JSDV'] = function () {
+JSDV = function () {
     var _extensions = {
     };
     var _validators = [];
