@@ -6,6 +6,19 @@ var delay = (function(){
   };
 })();
 
+var getElementByAttribute = function(attr, value) {
+    var allElements = document.getElementsByTagName('*');
+    var i, n;
+    for (i = 0, n = allElements.length; i < n; i++)
+    {
+        if (allElements[i].getAttribute('validator-id') == value)
+        {
+            return allElements[i];
+        }
+    }
+    return false;
+}
+
 var _Validator = function () {
 
     var KEYPRESS_DELAY = 700;
@@ -14,6 +27,7 @@ var _Validator = function () {
     var _text;
     var _showing = false;
     var _errorElem;
+    var _oRules;
     var _valid = true;
 
     var _rules = {
@@ -51,11 +65,32 @@ var _Validator = function () {
             }
 
             if (typeof(rule) === 'string') {
-                if (!validateOn) {
-                    _o.onkeyup = function () {
+                _oRules = rule;
 
+                if (!validateOn) {
+                    validateOn = '_o keyup';
+                }
+                var events = validateOn.split(",");
+                for (var i = 0; i<events.length; i++) {
+                    events[i] = events[i].replace(/^\s+|\s+$/g, '');
+
+                    var eventsArr = events[i].split(" ");
+
+                    if (eventsArr[0] != '_o') {
+                        var elem = document.getElementById(eventsArr[0]);
+                    } else {
+                        var elem = _o;
+                    }
+
+                    var action = eventsArr[1];
+
+                    elem["on" + action] = function () {
                         if (ajaxLink) {
-                            _ajaxValidate(ajaxLink);
+                            if (_validate(rule)) {
+                                _ajaxValidate(ajaxLink);
+                            } else {
+                                _show();
+                            }
                         } else {
                             if (!_validate(rule)) {
                                 _show();
@@ -63,7 +98,6 @@ var _Validator = function () {
                                 _hide();
                             }
                         }
-                        
                     };
 
                     if (!_validate(rule)) {
@@ -72,34 +106,6 @@ var _Validator = function () {
                         _hide();
                     }
 
-                } else {
-                    var events = validateOn.split(",");
-                    for (var i =0; i<events.length; i++) {
-                        events[i] = events[i].replace(/^\s+|\s+$/g, '');
-
-                        var eventsArr = events[i].split(" ");
-
-                        var elem = document.getElementById(eventsArr[0]);
-                        var action = eventsArr[1];
-                        elem["on" + action] = function () {
-                            if (ajaxLink) {
-                                _ajaxValidate(ajaxLink);
-                            } else {
-                                if (!_validate(rule)) {
-                                    _show();
-                                } else {
-                                    _hide();
-                                }
-                            }
-                        };
-
-                        if (!_validate(rule)) {
-                            _show();
-                        } else {
-                            _hide();
-                        }
-
-                    }
                 }
 
             }
@@ -165,6 +171,9 @@ var _Validator = function () {
     };
 
     var _validate = function (rule) {
+        if (!rule || typeof(rule) !== 'string') {
+            var rule = _oRules;
+        }
         if (typeof(rule) === 'string') {
             rule = rule.replace(/^\s+|\s+$/g, '');
             var rules = rule.split(" ");
@@ -187,7 +196,7 @@ var _Validator = function () {
             var xmlhttp;
             if (window.XMLHttpRequest) {
                 xmlhttp=new XMLHttpRequest();
-            } else {// code for IE6, IE5
+            } else {
                 xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
             }
             xmlhttp.onreadystatechange = function() {
@@ -228,7 +237,8 @@ var _Validator = function () {
     return {
         'init': _init,
         'extend': _extend,
-        'isValid': _isValid
+        'isValid': _isValid,
+        'validate': _validate
     };
 
 };
@@ -266,7 +276,7 @@ JSDV = function () {
             var verrorid = fields[i].hasAttribute('validate-error-id') ? fields[i].getAttribute('validate-error-id') : false;
             var validateOn = fields[i].hasAttribute('validate-on') ? fields[i].getAttribute('validate-on') : false;
             var ajaxLink = fields[i].hasAttribute('validate-ajax-link') ? fields[i].getAttribute('validate-ajax-link') : false;
-
+//console.log(fields[i].getAttribute('validate'));
             v.init({
                 "o": fields[i],
                 "rule": fields[i].getAttribute('validate'),
@@ -282,6 +292,7 @@ JSDV = function () {
         }
 
         for (i = 0; i < fields.length; i++) {
+            fields[i].setAttribute('validator-id', i);
             _v();
         }
     };
@@ -302,6 +313,14 @@ JSDV = function () {
             }
         }
         return valid;
+    }
+
+    var _validateOneById = function(id) {
+        var elem = document.getElementById(id);
+        if (elem.getAttribute('validator-id')) {
+            var id = elem.getAttribute('validator-id');
+            return _validators[id].validate(_validators[id].rule);
+        } else return true;
     }
 
     _extend({
@@ -332,6 +351,7 @@ JSDV = function () {
     return {
         'init': _init,
         'extend': _extend,
-        'isValid': _isValid
+        'isValid': _isValid,
+        'isValidById': _validateOneById
     };
 };

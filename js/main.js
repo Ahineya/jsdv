@@ -15,6 +15,8 @@ v.extend({
 
 v.init();
 
+v.isValidById('second'); //false
+
 document.getElementById('check').onclick = function(){
     alert(v.isValid() ? 'Valid' : 'Invalid' );
 };

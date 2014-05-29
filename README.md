@@ -37,6 +37,8 @@ That's all!
 
 To check that all fields on page is valid, use ```v.isValid();```
 
+To check one field is valid, use ```v.isValidById(id)```
+
 You can pass id of your own error container:
 
 ```html
@@ -55,7 +57,7 @@ Now there are validators:
 * length-min
 * length-max
 * same
-* [standalone] ajax
+* ajax
 
 Length-min and length-max validate needs an extra attributes: validate-length-min and validate-length-max:
 
@@ -88,7 +90,7 @@ You can put more than one validator on form input:
 
 #### Ajax validator
 
-Ajax validator works differently (for now, I think). You can't use ajax with other validators. Example:
+Ajax validator needs a validate-ajax-link attribute. It will post field value to that address. Example:
 ```html
 <input id="asyncTest" validate='ajax' validate-ajax-link="ajax.php" validate-message="Input current year" type="text" placeholder="Ajax"/>
 ```

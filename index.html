@@ -12,7 +12,7 @@
 	  <input id="first" type="text" validate="digits" validate-message="Digits only" placeholder="Digits only">
 	</div>
 	<div>
-	  <input id="second" type="text" validate="letters" validate-message="Letters only" placeholder="Letters only">
+	  <input id="second" type="text" validate="letters" validate-message="Letters only" placeholder="Letters only" value="1">
 	</div>
 	<div>
 	  <input id="third" type="text" validate="email required" validate-message="Required valid email" validate-error-id="test"  placeholder="Email required">
@@ -37,7 +37,7 @@
         <input id="depend-test-main" validate="depends-test" validate-depends="depend-test" validate-on="depend-test keyup, depend-test-main keyup" validate-message="If previous input value equals 'secret', then digits only, else letters only." type="text" placeholder="Depends"/>
     </div>
     <div>
-        <input id="asyncTest" validate='ajax' validate-ajax-link="ajax.php" validate-message="Input current year" type="text" placeholder="Ajax"/>
+        <input id="asyncTest" validate='digits ajax' validate-ajax-link="ajax.php" validate-message="Input current year" type="text" placeholder="Ajax"/>
     </div>
     <div>
         <button id="check">Check</button>
