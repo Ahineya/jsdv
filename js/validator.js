@@ -17,7 +17,7 @@ var getElementByAttribute = function(attr, value) {
         }
     }
     return false;
-}
+};
 
 var _Validator = function () {
 
@@ -71,34 +71,38 @@ var _Validator = function () {
                     validateOn = '_o keyup';
                 }
                 var events = validateOn.split(",");
+
+                var _validateHandler = function () {
+                    if (ajaxLink) {
+                        if (_validate(rule)) {
+                            _ajaxValidate(ajaxLink);
+                        } else {
+                            _show();
+                        }
+                    } else {
+                        if (!_validate(rule)) {
+                            _show();
+                        } else {
+                            _hide();
+                        }
+                    }
+                };
+
                 for (var i = 0; i<events.length; i++) {
                     events[i] = events[i].replace(/^\s+|\s+$/g, '');
 
                     var eventsArr = events[i].split(" ");
+                    var elem;
 
                     if (eventsArr[0] != '_o') {
-                        var elem = document.getElementById(eventsArr[0]);
+                        elem = document.getElementById(eventsArr[0]);
                     } else {
-                        var elem = _o;
+                        elem = _o;
                     }
 
                     var action = eventsArr[1];
 
-                    elem["on" + action] = function () {
-                        if (ajaxLink) {
-                            if (_validate(rule)) {
-                                _ajaxValidate(ajaxLink);
-                            } else {
-                                _show();
-                            }
-                        } else {
-                            if (!_validate(rule)) {
-                                _show();
-                            } else {
-                                _hide();
-                            }
-                        }
-                    };
+                    elem["on" + action] = _validateHandler;
 
                     if (!_validate(rule)) {
                         _show();
@@ -172,7 +176,7 @@ var _Validator = function () {
 
     var _validate = function (rule) {
         if (!rule || typeof(rule) !== 'string') {
-            var rule = _oRules;
+            rule = _oRules;
         }
         if (typeof(rule) === 'string') {
             rule = rule.replace(/^\s+|\s+$/g, '');
@@ -209,12 +213,12 @@ var _Validator = function () {
                         _show();
                     }
                 }
-            }
+            };
             xmlhttp.open("POST", link, true);
             xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             xmlhttp.send("validate-data="+_o.value);
         }, KEYPRESS_DELAY);
-    }
+    };
 
     var _setText = function (text) {
         if (typeof(text) === 'string') {
@@ -232,7 +236,7 @@ var _Validator = function () {
 
     var _isValid = function() {
         return _valid;
-    }
+    };
 
     return {
         'init': _init,
@@ -303,7 +307,7 @@ JSDV = function () {
                 _extensions[opts.name] = opts.f;
             }
         }
-    }
+    };
 
     var _isValid = function() {
         var valid = true;
@@ -313,15 +317,15 @@ JSDV = function () {
             }
         }
         return valid;
-    }
+    };
 
     var _validateOneById = function(id) {
         var elem = document.getElementById(id);
         if (elem.getAttribute('validator-id')) {
-            var id = elem.getAttribute('validator-id');
-            return _validators[id].validate(_validators[id].rule);
+            var validatorId = elem.getAttribute('validator-id');
+            return _validators[validatorId].validate(_validators[validatorId].rule);
         } else return true;
-    }
+    };
 
     _extend({
         f: function(o) {
